@@ -6,6 +6,12 @@ on:
     paths: 
       - /apis/poi/**
       - .github/workflows/dotnetPOITEST.yml
+      
+  pull_request:
+    branches: main
+    paths: 
+      - /apis/poi/**
+      - .github/workflows/dotnetPOITEST.yml
 
 jobs:
   build:
