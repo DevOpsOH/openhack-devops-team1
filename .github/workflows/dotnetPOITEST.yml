@@ -2,7 +2,7 @@ name: .NET POI workflow test
 
 on:
   push:
-    paths: apis/poi/**
+    paths: /apis/poi/poi.sln
 
 jobs:
   build:
