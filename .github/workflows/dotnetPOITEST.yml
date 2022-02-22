@@ -1,6 +1,7 @@
 name: .NET POI workflow test
 
 on:
+  workflow_dispatch:
   push:
     paths: /apis/poi/poi.sln
 
