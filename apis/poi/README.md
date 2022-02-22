@@ -4,7 +4,7 @@
 ## Overview
 
 POI (Trip Points of Interest) - CRUD API written in .Net Core 3.1 for points of interest on trips
-Workflow test 2
+Workflow test 3
 
 ## Build the Application
 
