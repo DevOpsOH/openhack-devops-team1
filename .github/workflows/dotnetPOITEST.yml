@@ -3,7 +3,7 @@ name: .NET POI workflow test
 on:
   workflow_dispatch:
   push:
-    paths: /apis/poi/poi.sln
+    paths: /apis/poi/**
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
       with:
         dotnet-version: 3.1.x
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore ./apis/poi/
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
