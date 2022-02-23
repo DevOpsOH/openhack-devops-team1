@@ -4,6 +4,7 @@ env:
   docker_path: ./apis/poi/web/
   repository: devopsoh/api-poi
   registry: openhacknsg2j8q8acr.azurecr.io
+  AZURE_WEBAPP_NAME: openhacknsg2j8q8poi
 
 on:
   workflow_dispatch:
@@ -61,5 +62,13 @@ jobs:
  
         - name: Docker Push
           run: docker push $registry/$repository:${{github.run_number}}
+
+        - name: Deploy to Azure Web App
+          id: deploy-to-webapp
+          uses: azure/webapps-deploy@0b651ed7546ecfc75024011f76944cb9b381ef1e
+          with:
+            app-name: ${{ env.AZURE_WEBAPP_NAME }}
+            publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+            images: 'ghcr.io/${{github.run_number}}'
       
       
