@@ -1,7 +1,7 @@
 name: .NET POI workflow test
 
 env: 
-  docker_path: /apis/poi/web/Docerfile
+  docker_path: /apis/poi/web/Dockerfile
   repository: devopsoh/api-poi
   registry: openhacknsg2j8q8acr.azurecr.io
 
