@@ -1,5 +1,10 @@
 name: .NET POI workflow test
 
+env: 
+  docker_path: /apis/poi/web/Docerfile
+  repository: devopsoh/api-poi
+  registry: openhacknsg2j8q8acr.azurecr.io
+
 on:
   workflow_dispatch:
   push:
@@ -40,6 +45,21 @@ jobs:
           title: Build failure
           body: ${{ github.run_number }}
           assignees: rrohit-singh
-       
+    
+  buildDocker:
+      runs-on: ubuntu-latest
+      
+      steps:
+
+        - uses: actions/checkout@v2
+ 
+        - name: Docker login    
+          run: docker login $registry -u ${{ secrets.ACR_USER }} -p ${{ secrets.ACR_KEY }}
+ 
+        - name: Docker build
+          run: docker build -t $registry/$repository:${{github.run_number}} --build-arg build_version=${{github.run_number}} $docker_path
+ 
+        - name: Docker Push
+          run: docker push $registry/$repository:${{github.run_number}}
       
       
