@@ -10,7 +10,7 @@ namespace poi.Models
 
         public BaseDataObject()
         {
-            Id = Guid.NewGuid().ToString()
+            Id = Guid.NewGuid().ToString();
         }
     }
 }
