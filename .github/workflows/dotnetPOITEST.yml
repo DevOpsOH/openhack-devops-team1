@@ -71,6 +71,7 @@ jobs:
           uses: azure/login@v1
           with:
            creds: ${{secrets.AZURE_CREDENTIALS}}
+           enable-AzPSSession: true
         - name: Start Staging web app service
           uses: azure/powershell@v1
           with:
@@ -135,6 +136,7 @@ jobs:
           uses: azure/login@v1
           with:
            creds: ${{secrets.AZURE_CREDENTIALS}}
+           enable-AzPSSession: true
         - name: Stop Staging Service
           uses: azure/powershell@v1
           with:
