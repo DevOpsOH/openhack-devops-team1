@@ -93,7 +93,15 @@ jobs:
           run: |
            az webapp deployment slot swap  -g openhacknsg2j8q8rg -n openhacknsg2j8q8poi --slot staging \ --target-slot production
   verify-prod:
+      runs-on: ubuntu-latest
+      needs: swap-slot
+      steps: 
+        - name: verify prod
   rollback-deployment:
+      runs-on: ubuntu-latest
+      needs: verify-prod
+      steps:
+        - name: rollback
 
       
       
