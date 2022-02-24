@@ -1,0 +1,34 @@
+name: verify endpoint workflow
+
+env: 
+  docker_path: ./apis/poi/web/
+  repository: devopsoh/api-poi
+  registry: openhacknsg2j8q8acr.azurecr.io
+  AZURE_WEBAPP_NAME: openhacknsg2j8q8poi
+  staging-url: https://openhacknsg2j8q8poi-staging.azurewebsites.net/api/healthcheck/poi
+
+on:
+  workflow_dispatch:
+  push:
+    paths: 
+      - /apis/poi/**
+      - .github/workflows/dotnetPOITEST.yml
+      
+  pull_request:
+    branches: main
+    paths: 
+      - /apis/poi/**
+      - .github/workflows/dotnetPOITEST.yml
+
+jobs:
+ 
+  deploy-staging:
+      runs-on: ubuntu-latest
+      
+      steps: 
+        - uses: actions/checkout@v2       
+        - name: Verify staging slot
+          run: apis/poi/wait-for-endpoint.sh ${{env.staging-url}} -t 30
+      
+      
+
