@@ -34,6 +34,7 @@ wait_for()
     while :
     do
             STATUS_CODE=$(curl --connect-timeout 2 --insecure -s -o /dev/null -w ''%{http_code}'' $URI)
+            echoerr $STATUS_CODE
             test "$STATUS_CODE" == "200"
             OUTCOME=$?
         if [[ $OUTCOME -eq 0 ]]; then
