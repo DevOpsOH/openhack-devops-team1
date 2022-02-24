@@ -93,7 +93,7 @@ namespace poi
             context.Response.ContentType = "application/json";
 
             var json = new JObject(
-                new JProperty("message", "POI Service Healthcheck blue"),
+                new JProperty("message", "POI Service Healthcheck Red"),
                 new JProperty("status", result.Status.ToString()));
 
             return context.Response.WriteAsync(
