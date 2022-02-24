@@ -80,7 +80,7 @@ jobs:
       steps:
         - uses: actions/checkout@v2
         - name: Verify staging slot
-          run: apis/poi/wait-for-endpoint.sh "https://openhacknsg2j8q8poi-staging.azurewebsites.net/api/healthcheck/poi"​​​​​ 
+          run: apis/poi/wait-for-endpoint.sh "https://openhacknsg2j8q8poi-staging.azurewebsites.net/api/healthcheck/poi"​​​​​
       
       
 
