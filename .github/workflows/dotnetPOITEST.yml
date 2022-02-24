@@ -113,7 +113,7 @@ jobs:
           uses: azure/CLI@v1
           with:
            inlineScript: |
-             az webapp deployment slot swap  -g openhacknsg2j8q8rg -n openhacknsg2j8q8poi --slot production --target-slot staging
+             az webapp deployment slot swap  -g openhacknsg2j8q8rg -n openhacknsg2j8q8poi --slot staging --target-slot production
      
          
 
