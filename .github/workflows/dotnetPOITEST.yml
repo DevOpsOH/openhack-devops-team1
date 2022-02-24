@@ -5,7 +5,7 @@ env:
   repository: devopsoh/api-poi
   registry: openhacknsg2j8q8acr.azurecr.io
   AZURE_WEBAPP_NAME: openhacknsg2j8q8poi
-  staging-url: https://openhacknsg2j8q8poi-staging.azurewebsites.net/api/healthcheck/poi
+  staging-url: http://openhacknsg2j8q8poi-staging.azurewebsites.net/api/healthcheck/poi
 
 on:
   workflow_dispatch:
