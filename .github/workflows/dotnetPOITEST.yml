@@ -11,13 +11,13 @@ on:
   workflow_dispatch:
   push:
     paths: 
-      - /apis/poi/**
+      - apis/poi/**
       - .github/workflows/dotnetPOITEST.yml
       
   pull_request:
     branches: main
     paths: 
-      - /apis/poi/**
+      - apis/poi/**
       - .github/workflows/dotnetPOITEST.yml
 
 jobs:
