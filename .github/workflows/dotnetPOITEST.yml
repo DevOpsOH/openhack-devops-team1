@@ -80,7 +80,7 @@ jobs:
       steps:
         - uses: actions/checkout@v2
         - name: Verify staging slot
-          run: apis/poi/wait-for-endpoint.sh ${{env.staging-url}}​​​​​ -t 30
+          run: apis/poi/wait-for-endpoint.sh ${{env.staging-url}}​​​​​ -t 120
       
       
 
