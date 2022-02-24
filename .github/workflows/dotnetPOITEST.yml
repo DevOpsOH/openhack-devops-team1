@@ -90,8 +90,10 @@ jobs:
           with:
            creds: ${​​​​{​​​​ secrets.AZURE_CREDENTIALS  }​​​​}​​​​
         - name: move changes from staging to verify-prod
-          run: |
-           az webapp deployment slot swap  -g openhacknsg2j8q8rg -n openhacknsg2j8q8poi --slot staging \ --target-slot production
+          uses: azure/CLI@v1
+          with:
+           inlineScript: |
+             az webapp deployment slot swap  -g openhacknsg2j8q8rg -n openhacknsg2j8q8poi --slot staging \ --target-slot production
   
 
       
