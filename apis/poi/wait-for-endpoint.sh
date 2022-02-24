@@ -3,10 +3,13 @@
 # Script waits until request to given URI returns 200 or timeout threshold is reached.
 # Can be given a command to run when done waiting.
 #
-SCRIPT_NAME=${​​​​0##*/}​​​​
-echoerr() {​​​​ if [[ $QUIET -ne 1 ]]; then echo "$@" 1>&2; fi }​​​​
+
+SCRIPT_NAME=${0##*/}
+
+echoerr() { if [[ $QUIET -ne 1 ]]; then echo "$@" 1>&2; fi }
+
 usage()
-{​​​​
+{
     cat << USAGE >&2
 Usage:
     $SCRIPT_NAME uri [-s] [-t timeout] [-- COMMAND ARGS]
@@ -18,9 +21,10 @@ Usage:
     -- COMMAND ARGS             Command with args to run after the test finishes
 USAGE
     exit 1
-}​​​​
+}
+
 wait_for()
-{​​​​
+{
     if [[ $TIMEOUT -gt 0 ]]; then
         echoerr "$SCRIPT_NAME: waiting $TIMEOUT seconds for $URI"
     else
@@ -29,7 +33,7 @@ wait_for()
     WAIT_START_TS=$(date +%s)
     while :
     do
-            STATUS_CODE=$(curl --connect-timeout 2 --insecure -s -o /dev/null -w ''%{​​​​http_code}​​​​'' $URI)
+            STATUS_CODE=$(curl --connect-timeout 2 --insecure -s -o /dev/null -w ''%{http_code}'' $URI)
             test "$STATUS_CODE" == "200"
             OUTCOME=$?
         if [[ $OUTCOME -eq 0 ]]; then
@@ -40,10 +44,11 @@ wait_for()
         sleep 1
     done
     return $OUTCOME
-}​​​​
+}
+
 # passes this script and its arguments to timeout (the script calls itself inside a timeout context)
 wait_for_wrapper()
-{​​​​
+{
     # In order to support SIGINT during timeout: http://unix.stackexchange.com/a/57692
     if [[ $QUIET -eq 1 ]]; then
         timeout $BUSY_BOX_TIMEFLAG $TIMEOUT $0 $URI --quiet --child --timeout=$TIMEOUT &
@@ -58,16 +63,18 @@ wait_for_wrapper()
         echoerr "$SCRIPT_NAME: timeout occurred after waiting $TIMEOUT seconds for $URI"
     fi
     return $OUTCOME
-}​​​​
+}
+
 validate_uri() 
-{​​​​
+{
     curl --connect-timeout 1 --insecure -s -o /dev/null $URI
     curl_exit_code=$?
     if [[ $curl_exit_code -eq 3 ]]; then # exit code 3 indicates an invalid URI
         echoerr "Error: you need to provide a VALID URI to test."
         usage
     fi
-}​​​​
+}
+
 # process arguments
 while [[ $# -gt 0 ]]
 do
@@ -100,7 +107,7 @@ do
         shift 2
         ;;
         --timeout=*)
-        TIMEOUT="${​​​​1#*=}​​​​"
+        TIMEOUT="${1#*=}"
         shift 1
         ;;
         --)
@@ -120,19 +127,24 @@ do
         ;;
     esac
 done
+
 # make sure that uri was given and is valid (by testing for curl exit code 3)
 if [[ "$URI" == "" ]]; then
     echoerr "Error: you need to provide a URI to test."
     usage
 fi
 validate_uri
-TIMEOUT=${​​​​TIMEOUT:-15}​​​​
-STRICT=${​​​​STRICT:-0}​​​​
-CHILD=${​​​​CHILD:-0}​​​​
-QUIET=${​​​​QUIET:-0}​​​​
+
+
+TIMEOUT=${TIMEOUT:-15}
+STRICT=${STRICT:-0}
+CHILD=${CHILD:-0}
+QUIET=${QUIET:-0}
+
 # Check to see if timeout is from busybox?
 TIMEOUT_PATH=$(type -p timeout)
 TIMEOUT_PATH=$(realpath $TIMEOUT_PATH 2>/dev/null || readlink -f $TIMEOUT_PATH)
+
 BUSY_BOX_TIMEFLAG=""
 if [[ $TIMEOUT_PATH =~ "busybox" ]]; then
     ON_BUSY_BOX=1
@@ -144,6 +156,7 @@ if [[ $TIMEOUT_PATH =~ "busybox" ]]; then
 else
     ON_BUSY_BOX=0
 fi
+
 if [[ $CHILD -gt 0 ]]; then
     wait_for
     OUTCOME=$?
@@ -157,15 +170,13 @@ else
         OUTCOME=$?
     fi
 fi
+
 if [[ $COMMAND != "" ]]; then
     if [[ $OUTCOME -ne 0 && $STRICT -eq 1 ]]; then
         echoerr "$SCRIPT_NAME: strict mode, refusing to execute subprocess"
         exit $OUTCOME
     fi
-    exec "${​​​​COMMAND[@]}​​​​"
+    exec "${COMMAND[@]}"
 else
     exit $OUTCOME
 fi
-
- 
-
